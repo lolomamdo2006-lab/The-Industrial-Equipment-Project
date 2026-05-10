@@ -10,7 +10,7 @@ First, pull the code from GitHub to your local machine:
 
 ```bash
 git clone https://github.com/lolomamdo2006-lab/The-Industrial-Equipment-Project.git
-cd budgetproject
+cd ourProject
 ```
 
 ---
