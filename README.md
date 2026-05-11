@@ -73,4 +73,53 @@ python manage.py runserver
 
 ---
 
+## 6. SQL Database Setup 🗄️
 
+follow these steps to connect it properly:
+
+### 6.1 Install SQL Server
+Make sure you have SQL Server installed (or SQL Server Express).
+
+Also install:
+- SQL Server Management Studio (SSMS)
+- ODBC Driver for SQL Server
+the link
+(https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver17&utm_source=chatgpt.com)
+
+and do 
+pip install -r requirements.txt
+
+---
+
+### 6.2 Create a Database
+Open SQL Server and run:
+the file that sama do (on whatsapp)
+
+## 6. Environment Variables Setup (.env) 🔐
+
+Before running the project, you need to create a `.env` file in the root directory of the project.
+
+This file is required to store sensitive information like database credentials and secret keys.
+
+### 6.1 Create the `.env` file
+
+Create a file named: .env
+
+### 6.2 Add the following variables inside `.env`
+
+```env
+SECRET_KEY=your_secret_key_here
+DEBUG=True
+
+DB_NAME=your_database_name
+DB_HOST=your host name
+DB_PORT=''
+
+# 1. Install required python packages
+pip install -r requirements.txt
+
+# 2. Apply migrations to the database
+python manage.py migrate
+
+# 3. Start the project
+python manage.py runserver
