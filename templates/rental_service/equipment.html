@@ -8,7 +8,7 @@
     tr:nth-child(even) { background-color: #f2f2f2; }
     h1 { text-align: center; color: #333; }
 </style>
-
+<div class="content">
 <h1>🚜 Industrial Equipment Inventory</h1>
 
 <table>
@@ -34,5 +34,17 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>
+</table></div>
+<style>
+        .content{
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;    
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+</style>
 {% endblock content %}
