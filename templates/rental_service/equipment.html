@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    table { width: 80%; margin: 20px auto; border-collapse: collapse; font-family: Arial, sans-serif; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background-color: #f4b41a; color: white; }
+    tr:nth-child(even) { background-color: #f2f2f2; }
+    h1 { text-align: center; color: #333; }
+</style>
+
+<h1>🚜 Industrial Equipment Inventory</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Serial Number</th>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in equipment %}
+        <tr>
+            <td>{{ item.0 }}</td>
+            <td>{{ item.1 }}</td>
+            <td>{{ item.2 }}</td>
+            <td>{{ item.3 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="text-align: center;">No equipment found in the database.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
