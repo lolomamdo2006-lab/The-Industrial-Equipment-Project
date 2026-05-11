@@ -72,11 +72,22 @@ WSGI_APPLICATION = 'ourProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+from decouple import config
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'mssql',
+        'NAME': config('DB_NAME'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
+
+        'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'trust_server_certificate': True,
+            'extra_params': 'Encrypt=yes;TrustServerCertificate=yes'
+
+        },
+    },
 }
 
 
