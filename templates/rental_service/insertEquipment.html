@@ -2,11 +2,13 @@
 
 {% block content %}
 <form method="POST" >
-    {% csrf_token %} <label>Equipment ID:</label>
-    <input type="number" name="Equipment_ID" required><br><br>
-    {%if message%}
-     <div style="color: red;">{{message}}</div>
+    {% csrf_token %}
+        {%if message%}
+     <div style="color: {{color}};">{{message}}</div>
     {%endif%}
+     <label>Equipment ID:</label>
+    <input type="number" name="Equipment_ID" required><br><br>
+
     <label>Model:</label>
     <input type="text" name="Model" required><br><br>
 

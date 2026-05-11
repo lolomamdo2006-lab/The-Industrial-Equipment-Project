@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    table { width: 80%; margin: 20px auto; border-collapse: collapse; font-family: Arial, sans-serif; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background-color: #f4b41a; color: white; }
+    tr:nth-child(even) { background-color: #f2f2f2; }
+    h1 { text-align: center; color: #333; }
+</style>
+<div class="content">
+<h1>🚜 Industrial Yard Inventory</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Yard_ID</th>
+            <th>Location</th>
+            <th>Capacity</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in yard %}
+        <tr>
+            <td>{{ item.0 }}</td>
+            <td>{{ item.1 }}</td>
+            <td>{{ item.2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="text-align: center;">No yard found in the database.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table></div>
+<style>
+        .content{
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;    
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock content %}
