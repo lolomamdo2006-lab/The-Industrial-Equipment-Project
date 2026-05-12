@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    {% if message %}
+    <div style="color: {{ color }}; margin-bottom: 15px; font-weight: bold;">
+        {{ message }}
+    </div>
+    {% endif %}
+
+    <h2>🗑️ Delete Equipment</h2>
+
+    <label>Equipment ID to Delete:</label>
+    <input type="number" name="Equipment_ID" required><br><br>
+
+    <button type="submit"
+        onclick="return confirm('Are you sure you want to delete this equipment?');">
+        Delete Equipment
+    </button>
+</form>
+
+<style>
+    form {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    button {
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    button:hover { background-color: #c0392b; }
+</style>
+
+{% endblock content %}

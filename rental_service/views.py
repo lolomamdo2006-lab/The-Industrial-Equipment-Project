@@ -1,9 +1,11 @@
+from django.shortcuts import render, redirect
 from django.shortcuts import render,redirect
 
 # Create your views here.
 from django.db import connection
 
 from django.db import IntegrityError
+
 def equipment_list(request):
     with connection.cursor() as cursor:
      
@@ -98,6 +100,51 @@ def yard_list(request):
         rows = cursor.fetchall()
     
     return render(request, 'rental_service\yard.html', {'yard': rows})
+
+# ===== DELETE =====
+
+def delete_equipment(request):
+    if request.method == "POST":
+        equipment_id = request.POST.get('Equipment_ID')
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM Equipment WHERE Equipment_ID = %s",
+                    [equipment_id]
+                )
+                connection.commit()
+            return redirect('equipment_list')
+        except IntegrityError:
+            return redirect(f'/yard/?error=Cannot delete: This yard has equipment assigned to it')
+
+    return redirect('equipment_list')
+
+
+def delete_yard(request):
+    if request.method == "POST":
+        yard_id = request.POST.get('Yard_ID')
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM Yard WHERE Yard_ID = %s",
+                    [yard_id]
+                )
+                connection.commit()
+        except IntegrityError:
+            return redirect(f'/yard/?error=Cannot delete: This yard has equipment assigned to it')
+
+    return redirect('yard_list')
+
+# ======= SELECT ========
+
+# def select_Yard(request):
+#     with connection.cursor() as cursor:
+#         cursor.execute("SELECT * FROM Yard")
+#         rows = cursor.fetchall()
+#     return render(request, 'rental_service/selectYard.html', {'yards': rows})
+
+
+
 def update_equipment(request, old_id):
     with connection.cursor() as cursor:
         cursor.execute(
