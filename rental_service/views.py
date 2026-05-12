@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 # Create your views here.
 from django.db import connection
@@ -57,15 +57,7 @@ def insert_equipment(request):
 
     return render(request, 'rental_service/insertEquipment.html')
 
-# 
 
-# try:
-#     with connection.cursor() as cursor:
-#         cursor.execute("INSERT INTO Equipment ...", [e_id, ...])
-#         connection.commit()
-# except IntegrityError:
-#     # هنا بنقفش الـ Error لو الـ ID اتكرر
-#     return render(request, 'insert.html', {'message': 'الـ ID ده مستخدم قبل كدة، جرب غيره!'})
 
 def insert_yard(request):
     yard_id=request.POST.get('Yard_ID')
@@ -106,3 +98,86 @@ def yard_list(request):
         rows = cursor.fetchall()
     
     return render(request, 'rental_service\yard.html', {'yard': rows})
+def update_equipment(request, old_id):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM Equipment WHERE Equipment_ID = %s",
+            [old_id]
+        )
+        row = cursor.fetchone()
+
+    if request.method == 'POST':
+        e_id = request.POST.get('Equipment_ID')
+        model = request.POST.get('Model')
+        power = request.POST.get('Engine_power')
+        rate = request.POST.get('Hourly_rental_rate')
+        status = request.POST.get('Status')
+        yard_id = request.POST.get('Yard_ID')
+
+        if yard_id == "" or yard_id is None:
+            yard_id = None
+
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    UPDATE Equipment SET 
+                    Equipment_ID=%s,
+                    Model=%s,
+                    Engine_power=%s,
+                    Hourly_rental_rate=%s,
+                    Status=%s,
+                    Yard_ID=%s
+                    WHERE Equipment_ID=%s
+                    """,
+                    [e_id, model, power, rate, status, yard_id, old_id]
+                )
+
+            
+            return redirect('equipment_list')
+
+        except IntegrityError:
+            return render(
+                request,
+                'rental_service/updateEquipment.html',
+                {'equipment': row, 'message': 'Data Invalid', 'color': 'red'}
+            )
+
+    return render(request, 'rental_service/updateEquipment.html', {'equipment': row})
+def update_yard(request, old_id):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT * FROM Yard WHERE Yard_ID = %s",
+            [old_id]
+        )
+        row = cursor.fetchone()
+
+    if request.method == 'POST':
+        yard_id = request.POST.get('Yard_ID')
+        loc = request.POST.get('Location')
+        cap = request.POST.get('Capacity')
+
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    UPDATE Yard SET 
+                    Yard_ID=%s,
+                    Location=%s,
+                    Capacity=%s
+                    WHERE Yard_ID=%s
+                    """,
+                    [yard_id, loc, cap, old_id]
+                )
+
+            
+            return redirect('yard_list')
+
+        except IntegrityError:
+            return render(
+                request,
+                'rental_service/updateYard.html',
+                {'yard': row, 'message': 'Data Invalid', 'color': 'red'}
+            )
+
+    return render(request, 'rental_service/updateYard.html', {'yard': row})
