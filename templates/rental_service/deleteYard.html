@@ -23,26 +23,149 @@
 </form>
 
 <style>
-    form {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 100px;
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    }
-    button {
-        background-color: #e74c3c;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 15px;
-    }
-    button:hover { background-color: #c0392b; }
+
+form{
+
+    width: 65%;
+
+    margin: 40px auto;
+
+    padding: 40px;
+
+    border-radius: 30px;
+
+    background: rgba(22, 34, 52, 0.78);
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+    0 8px 32px rgba(0,0,0,0.35);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+/* title */
+
+form h2{
+
+    text-align: center;
+
+    color: #67e8f9;
+
+    margin-bottom: 10px;
+
+    font-size: 34px;
+}
+
+/* labels */
+
+label{
+
+    color: #dbe7f3;
+
+    font-size: 16px;
+
+    margin-bottom: -10px;
+}
+
+/* inputs */
+
+input{
+
+    width: 100%;
+
+    padding: 15px 18px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.06);
+
+    color: white;
+
+    font-size: 15px;
+
+    transition: 0.3s ease;
+
+    border: 1px solid transparent;
+}
+
+/* input focus */
+
+input:focus{
+
+    border: 1px solid #67e8f9;
+
+    box-shadow:
+    0 0 15px rgba(103,232,249,0.35);
+
+    background: rgba(255,255,255,0.08);
+}
+
+/* placeholder */
+
+input::placeholder{
+
+    color: #9fb3c8;
+}
+
+/* save button */
+
+button{
+
+    margin-top: 10px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: linear-gradient(
+    135deg,
+    #ff6b81,
+    #ff4d6d
+    );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+    0 8px 20px rgba(255,77,109,0.25);
+}
+
+button:hover{
+
+    transform: translateY(-3px);
+
+    box-shadow:
+    0 12px 24px rgba(255,77,109,0.35);
+}
+/* messages */
+
+form div{
+
+    text-align: center;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
 </style>
 
 {% endblock content %}
