@@ -116,4 +116,10 @@
 
 </div>
 
+{% if request.GET.error %}
+<script>
+    alert("{{ request.GET.error }}");
+</script>
+{% endif %}
+
 {% endblock content %}

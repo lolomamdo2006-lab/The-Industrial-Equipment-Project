@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.db import connection
 
 from django.db import IntegrityError
+
 def equipment_list(request):
     with connection.cursor() as cursor:
      
@@ -120,9 +121,8 @@ def delete_equipment(request):
                 )
                 connection.commit()
             return redirect('equipment_list')
-        except Exception as e:
-            return render(request, 'rental_service/deleteEquipment.html',
-                {'message': f'Error: {e}', 'color': 'rgb(192, 27, 27)'})
+        except IntegrityError:
+            return redirect(f'/yard/?error=Cannot delete: This yard has equipment assigned to it')
 
     return redirect('equipment_list')
 
@@ -137,10 +137,8 @@ def delete_yard(request):
                     [yard_id]
                 )
                 connection.commit()
-            return redirect('yard_list')
-        except Exception as e:
-            return render(request, 'rental_service/yard.html',
-                {'message': f'Error: {e}', 'color': 'rgb(192, 27, 27)'})
+        except IntegrityError:
+            return redirect(f'/yard/?error=Cannot delete: This yard has equipment assigned to it')
 
     return redirect('yard_list')
 
