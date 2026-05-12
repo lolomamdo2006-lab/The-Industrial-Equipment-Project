@@ -137,11 +137,11 @@ def delete_yard(request):
 
 # ======= SELECT ========
 
-# def select_Yard(request):
-#     with connection.cursor() as cursor:
-#         cursor.execute("SELECT * FROM Yard")
-#         rows = cursor.fetchall()
-#     return render(request, 'rental_service/selectYard.html', {'yards': rows})
+def select_Yard(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM Yard")
+        rows = cursor.fetchall()
+    return render(request, 'rental_service/selectYard.html', {'yards': rows})
 
 
 
