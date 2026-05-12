@@ -65,6 +65,7 @@ def insert_yard(request):
     yard_id=request.POST.get('Yard_ID')
     local=request.POST.get('Location')
     cap=request.POST.get('Capacity')
+    messageyard=''
     try:
         with connection.cursor() as cursor:
 
