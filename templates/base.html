@@ -1,6 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EquipRent</title>
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
 <body>
     {% include 'navbar.html' %} <div class="main-content">
         {% block content %}
         {% endblock %}
     </div>
 </body>
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+
+    background:
+    radial-gradient(circle at top left, #183b5c, #0f172a 45%),
+    linear-gradient(to bottom, #132238, #0f172a);
+
+    min-height: 100vh;
+
+    color: white;
+
+    overflow-x: hidden;
+}
+
+.main-content{
+
+    margin-left: 260px;
+
+    padding: 40px;
+
+    min-height: 100vh;
+}
+
+/* glow effect */
+
+body::before{
+
+    content: "";
+
+    position: fixed;
+
+    width: 500px;
+
+    height: 500px;
+
+    background: rgba(64, 224, 208, 0.08);
+
+    border-radius: 50%;
+
+    top: -200px;
+
+    right: -100px;
+
+    filter: blur(100px);
+
+    z-index: -1;
+}
+
+</style>
+</html>

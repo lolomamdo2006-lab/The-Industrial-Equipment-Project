@@ -237,33 +237,36 @@ h1 i{
 }
 
 </style>
-
 <div class="content">
     <h1>
 
-<i class="fa-solid fa-map-location-dot"></i>
+<i class="fa-solid fa-screwdriver-wrench"></i>
 
-Yards
+Equipment and Yard Details
 
 </h1>
     <table>
         <thead>
             <tr>
-                <th>Yard ID</th>
-                <th>Location</th>
-                <th>Cabacity</th>
+                <th>Equipment ID</th>
+                <th>Model</th>
+                <th>Status</th>
+                <th>Yard Location</th>
+                <th>Yard Capacity</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in yards %}
+            {% for item in data %}
             <tr>
                 <td>{{ item.0 }}</td>
                 <td>{{ item.1 }}</td>
                 <td>{{ item.2 }}</td>
+                <td>{{ item.3 }}</td>
+                <td>{{ item.4 }}</td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6" style="text-align:center;">No yards found.</td>
+                <td colspan="5" style="text-align:center;">No data found.</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -13,4 +13,5 @@ urlpatterns = [
     path('deleteYard/', views.delete_yard, name='delete_yard'),
 
     path('selectYard/', views.select_Yard, name='select_Yard'),
+    path('selectEquipmentYard/', views.select_equipment_yard, name='select_equipment_yard'),
 ]

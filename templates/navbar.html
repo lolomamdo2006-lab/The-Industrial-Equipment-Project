@@ -1,38 +1,213 @@
 <div class="sidebar">
+    <div class="logo">
+
+    <div class="logo-icon">
+
+        <i class="fa-solid fa-cubes-stacked"></i>
+
+    </div>
+
+    <h1>EquipRent</h1>
+
+    <p>
+        Industrial Equipment <br>
+        Management System
+    </p>
+
+</div>
     
     
-    <a href="{% url 'equipment_list' %}">Equipments</a>
+    <a href="{% url 'equipment_list' %}">
+    <i class="fa-solid fa-truck-monster"></i>
+    Equipments
+</a>
 
-    <a href="{% url 'yard_list' %}">Yards</a>
-    <a href="{% url 'select_Yard' %}">Select Yards</a>
+<a href="{% url 'yard_list' %}">
+    <i class="fa-solid fa-warehouse"></i>
+    Yards
+</a>
 
- 
+<a href="{% url 'select_Yard' %}">
+    <i class="fa-solid fa-map-location-dot"></i>
+    Select Yards
+</a>
+
+<a href="{% url 'select_equipment_yard' %}">
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+    Equipment Details
+</a>
 
 
 </div>
 <style>
-    .sidebar{
-width: 100%;       
-        height: 68px;
-        position: fixed;   
-        top: 0;
-        left: 0;           
-        background-color: #333; 
-        padding-top: 20px;
-        color: white;
-        display: flex;   
-        align-items: center;
-    }
-    .sidebar a {
-        padding: 15px;
-        text-decoration: none;
-        font-size: 18px;
-        color: white;
-        display: block;       
-    }
 
+.sidebar{
 
-    .sidebar a:hover {
-        background-color: #575757;
-    }
+    width: 230px;
+
+    height: 94vh;
+
+    position: fixed;
+
+    top: 20px;
+
+    left: 20px;
+
+    background: rgba(20, 35, 55, 0.88);
+
+    backdrop-filter: blur(18px);
+
+    border-radius: 28px;
+
+    padding: 30px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    box-shadow:
+    0 8px 30px rgba(0,0,0,0.35),
+    inset 0 1px 1px rgba(255,255,255,0.06);
+
+}
+
+/* project title */
+
+.logo{
+
+    margin-bottom: 35px;
+
+    padding-left: 10px;
+}
+
+.logo h1{
+
+    color: #58e1d9;
+
+    font-size: 34px;
+
+    margin-bottom: 8px;
+}
+
+.logo p{
+
+    color: #b8c7d9;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+/* links */
+
+.sidebar a{
+
+    text-decoration: none;
+
+    color: #dbe7f3;
+
+    padding: 16px 18px;
+
+    border-radius: 16px;
+
+    transition: 0.3s ease;
+
+    font-size: 17px;
+
+    font-weight: 500;
+}
+
+/* hover */
+
+.sidebar a:hover{
+
+    background: linear-gradient(
+    135deg,
+    #49d6cf,
+    #2ea7ff
+    );
+
+    color: white;
+
+    transform: translateX(6px);
+
+    box-shadow:
+    0 6px 18px rgba(73,214,207,0.35);
+}
+.sidebar a i{
+
+    margin-right: 12px;
+
+    font-size: 16px;
+}
+.logo{
+
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+/* icon box */
+
+.logo-icon{
+
+    width: 75px;
+
+    height: 75px;
+
+    margin: auto;
+
+    border-radius: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: linear-gradient(
+    135deg,
+    #5eead4,
+    #8b5cf6
+    );
+
+    box-shadow:
+    0 8px 25px rgba(94,234,212,0.25);
+
+    margin-bottom: 18px;
+}
+
+/* icon */
+
+.logo-icon i{
+
+    color: white;
+
+    font-size: 30px;
+}
+
+/* title */
+
+.logo h1{
+
+    color: #ffffff;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+/* subtitle */
+
+.logo p{
+
+    color: #b8c7d9;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+}
+
 </style>

@@ -136,7 +136,8 @@ def delete_yard(request):
 
     return redirect('yard_list')
 
-# ======= SELECT ========
+
+# ======= SELECT All Yards ========
 
 def select_Yard(request):
     with connection.cursor() as cursor:
@@ -145,6 +146,20 @@ def select_Yard(request):
     return render(request, 'rental_service/selectYard.html', {'yards': rows})
 
 
+# ======= SELECT WITH JOIN (Equipment & Yard) ========
+
+def select_equipment_yard(request):
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT e.Equipment_ID, e.Model, e.Status, y.Location, y.Capacity
+            FROM Equipment e
+            JOIN Yard y ON e.Yard_ID = y.Yard_ID
+        """)
+        rows = cursor.fetchall()
+    return render(request, 'rental_service/selectEquipmentYard.html', {'data': rows})
+
+
+# ======= UPDATE ========
 
 def update_equipment(request, old_id):
     with connection.cursor() as cursor:
@@ -192,6 +207,8 @@ def update_equipment(request, old_id):
             )
 
     return render(request, 'rental_service/updateEquipment.html', {'equipment': row})
+
+
 def update_yard(request, old_id):
     with connection.cursor() as cursor:
         cursor.execute(
