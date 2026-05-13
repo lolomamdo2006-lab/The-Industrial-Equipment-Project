@@ -5,14 +5,14 @@
 <div class="dashboard-container">
 
     <h1 class="dashboard-title">
-        ⬢ Industrial Equipment Dashboard
+        <i class="fa-solid fa-gauge-high dashboard-icon"></i></span> Industrial Equipment Dashboard
     </h1>
 
     <div class="dashboard-grid">
 
         <!-- Most Rented -->
         <div class="dashboard-card">
-            <h2>⬡ Most Rented Equipment</h2>
+            <h2><span class="white-icon">📈</span> Most Rented Equipment</h2>
 
             {% if most_rented %}
                 <div class="info-box">
@@ -24,7 +24,7 @@
 
         <!-- Technicians -->
         <div class="dashboard-card">
-            <h2>⬢ Top Technicians</h2>
+            <h2> <span class="white-icon">🛠️</span>Top Technicians</h2>
 
             {% for tech in technicians %}
                 <div class="info-box">
@@ -37,7 +37,7 @@
 
         <!-- Contractors -->
         <div class="dashboard-card">
-            <h2>⬡ Inactive Contractors</h2>
+            <h2><span class="white-icon">🏢</span> Inactive Contractors</h2>
 
             {% for contractor in inactive_contractors %}
                 <div class="info-box">
@@ -48,7 +48,7 @@
 
         <!-- Machines -->
         <div class="dashboard-card">
-            <h2>⬢ Available Machines</h2>
+            <h2><span class="white-icon">⚙️</span> Available Machines</h2>
 
             {% for machine in available_machines %}
                 <div class="info-box">
@@ -61,7 +61,7 @@
 
         <!-- Hours -->
         <div class="dashboard-card">
-            <h2>⬡ Contractor Rental Hours</h2>
+            <h2><span class="white-icon">⏱️</span> Contractor Rental Hours</h2>
 
             {% for contractor in contractor_hours %}
                 <div class="info-box">
@@ -73,7 +73,7 @@
 
         <!-- Yards -->
         <div class="dashboard-card">
-            <h2>⬢ Yards Without Rentals</h2>
+            <h2><span class="white-icon">⬢</span> Yards Without Rentals</h2>
 
             {% for y in yard_had_no_equipment %}
                 <div class="info-box">
@@ -108,7 +108,7 @@ body{
     font-size: 42px;
     font-weight: bold;
     margin-bottom: 45px;
-    color: #ffffff;
+    color: #67e8f9;
     letter-spacing: 1px;
     text-shadow: 0 0 18px rgba(255,255,255,0.25);
 }
@@ -165,6 +165,11 @@ body{
     letter-spacing: 0.5px;
 }
 
+.dashboard-icon{
+    color: white;
+    margin-right: 10px;
+}
+
 /* Info Boxes */
 
 .info-box{
@@ -203,6 +208,24 @@ span{
 ::-webkit-scrollbar-thumb{
     background: #06b6d4;
     border-radius: 20px;
+}
+
+.white-icon{
+    color: white;
+    margin-right: 6px;
+}
+.dashboard-title{
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{
+        text-shadow: 0 0 10px rgba(103,232,249,0.2);
+    }
+
+    to{
+        text-shadow: 0 0 25px rgba(103,232,249,0.7);
+    }
 }
 
 </style>
