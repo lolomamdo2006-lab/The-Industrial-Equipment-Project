@@ -1,53 +1,210 @@
-<h1>Dashboard</h1>
+{% extends 'base.html' %}
 
-<h2>Most Rented Equipment</h2>
+{% block content %}
 
-{% if most_rented %}
-    <p>Model: {{ most_rented.0 }}</p>
-    <p>Rental Count: {{ most_rented.1 }}</p>
-{% endif %}
+<div class="dashboard-container">
 
-<hr>
+    <h1 class="dashboard-title">
+        ⬢ Industrial Equipment Dashboard
+    </h1>
 
-<h2>Top Technicians Last Month</h2>
+    <div class="dashboard-grid">
 
-{% for tech in technicians %}
-    <p>ID: {{ tech.0 }}</p>
-    <p>Name: {{ tech.1 }}</p>
-    <p>Inspection Count: {{ tech.2 }}</p>
-    <hr>
-{% endfor %}
-<hr>
+        <!-- Most Rented -->
+        <div class="dashboard-card">
+            <h2>⬡ Most Rented Equipment</h2>
 
-<h2>Inactive Contractors Last Month</h2>
+            {% if most_rented %}
+                <div class="info-box">
+                    <p><span>Model:</span> {{ most_rented.0 }}</p>
+                    <p><span>Rental Count:</span> {{ most_rented.1 }}</p>
+                </div>
+            {% endif %}
+        </div>
 
-{% for contractor in inactive_contractors %}
-    <p>{{ contractor.0 }}</p>
-{% endfor %}
+        <!-- Technicians -->
+        <div class="dashboard-card">
+            <h2>⬢ Top Technicians</h2>
 
-<hr>
+            {% for tech in technicians %}
+                <div class="info-box">
+                    <p><span>ID:</span> {{ tech.0 }}</p>
+                    <p><span>Name:</span> {{ tech.1 }}</p>
+                    <p><span>Inspection Count:</span> {{ tech.2 }}</p>
+                </div>
+            {% endfor %}
+        </div>
 
-<h2>Available Machines Last Month</h2>
+        <!-- Contractors -->
+        <div class="dashboard-card">
+            <h2>⬡ Inactive Contractors</h2>
 
-{% for machine in available_machines %}
-    <p>Yard: {{ machine.0 }}</p>
-    <p>Model: {{ machine.1 }}</p>
-    <p>Equipment ID: {{ machine.2 }}</p>
-    <hr>
-{% endfor %}
+            {% for contractor in inactive_contractors %}
+                <div class="info-box">
+                    <p>{{ contractor.0 }}</p>
+                </div>
+            {% endfor %}
+        </div>
 
-<hr>
+        <!-- Machines -->
+        <div class="dashboard-card">
+            <h2>⬢ Available Machines</h2>
 
-<h2>Contractor Rental Hours Last Month</h2>
+            {% for machine in available_machines %}
+                <div class="info-box">
+                    <p><span>Yard:</span> {{ machine.0 }}</p>
+                    <p><span>Model:</span> {{ machine.1 }}</p>
+                    <p><span>Equipment ID:</span> {{ machine.2 }}</p>
+                </div>
+            {% endfor %}
+        </div>
 
-{% for contractor in contractor_hours %}
-    <p>Company: {{ contractor.0 }}</p>
-    <p>Total Hours: {{ contractor.1 }}</p>
-    <hr>
-{% endfor %}
-<hr>
-<h2>Yard had no equipment rentals originating from it last month</h2>
-{% for y in yard_had_no_equipment %}
-    <p>Yard id is: {{ y.0 }}</p>
-    <hr>
-{% endfor %}
+        <!-- Hours -->
+        <div class="dashboard-card">
+            <h2>⬡ Contractor Rental Hours</h2>
+
+            {% for contractor in contractor_hours %}
+                <div class="info-box">
+                    <p><span>Company:</span> {{ contractor.0 }}</p>
+                    <p><span>Total Hours:</span> {{ contractor.1 }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Yards -->
+        <div class="dashboard-card">
+            <h2>⬢ Yards Without Rentals</h2>
+
+            {% for y in yard_had_no_equipment %}
+                <div class="info-box">
+                    <p><span>Yard ID:</span> {{ y.0 }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+body{
+    background: linear-gradient(135deg, #0f172a, #111827);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Main Container */
+
+.dashboard-container{
+    padding: 40px;
+    margin-top: 70px;
+}
+
+/* Title */
+
+.dashboard-title{
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 45px;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-shadow: 0 0 18px rgba(255,255,255,0.25);
+}
+
+/* Grid */
+
+.dashboard-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+/* Cards */
+
+.dashboard-card{
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    transition: 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #06b6d4, #67e8f9);
+    transition: 0.5s;
+}
+
+.dashboard-card:hover::before{
+    left: 0;
+}
+
+.dashboard-card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(6,182,212,0.25);
+}
+
+/* Card Titles */
+
+.dashboard-card h2{
+    margin-bottom: 22px;
+    color: #67e8f9;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Info Boxes */
+
+.info-box{
+    background: rgba(255,255,255,0.04);
+    border-left: 4px solid #06b6d4;
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    transition: 0.3s;
+}
+
+.info-box:hover{
+    background: rgba(255,255,255,0.08);
+    transform: scale(1.02);
+}
+
+/* Text */
+
+.info-box p{
+    margin: 8px 0;
+    font-size: 16px;
+    color: #f8fcfb;
+}
+
+span{
+    color: #67e8f9;
+    font-weight: bold;
+}
+
+/* Scroll */
+
+::-webkit-scrollbar{
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #06b6d4;
+    border-radius: 20px;
+}
+
+</style>
+
+{% endblock %}
