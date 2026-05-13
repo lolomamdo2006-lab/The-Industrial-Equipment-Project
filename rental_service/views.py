@@ -246,3 +246,131 @@ def update_yard(request, old_id):
             )
 
     return render(request, 'rental_service/updateYard.html', {'yard': row})
+
+#######################inquiry#########################
+
+
+def dashboard(request):
+
+    with connection.cursor() as cursor:
+
+        # 1) Most rented equipment model
+        cursor.execute("""
+            SELECT TOP 1
+                E.MODEL,
+                COUNT(R.AGREEMENT_ID) AS RENTAL_COUNT
+            FROM EQUIPMENT E
+            JOIN RENTAL_AGREEMENT R
+                ON E.EQUIPMENT_ID = R.EQUIPMENT_ID
+            GROUP BY E.MODEL
+            ORDER BY RENTAL_COUNT DESC
+        """)
+
+        most_rented = cursor.fetchone()
+
+        # 2) Top technician last month
+        cursor.execute("""
+            SELECT TOP 1 WITH TIES
+                T.TECHNICIAN_ID,
+                T.NAME,
+                COUNT(S.INSPECTION_ID) AS Inspection_Count
+            FROM SAFETY_RELEASE_INSPECTION S
+            JOIN TECHNICIAN T
+                ON S.TECHNICIAN_ID = T.TECHNICIAN_ID
+            WHERE
+                S.INSPECTION_DATE >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()) - 1, 1)
+                AND S.INSPECTION_DATE < DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)
+            GROUP BY
+                T.TECHNICIAN_ID, T.NAME
+            ORDER BY
+                Inspection_Count DESC
+        """)
+
+        technicians = cursor.fetchall()
+
+        # 3) Contractors with no rental agreements last month
+        cursor.execute("""
+            SELECT C.NAME
+            FROM CONTRACTOR C
+            WHERE C.CONTRACTOR_ID NOT IN (
+                SELECT R.CONTRACTOR_ID
+                FROM RENTAL_AGREEMENT R
+                WHERE MONTH(R.START_DATE) = MONTH(GETDATE()) - 1
+                AND YEAR(R.START_DATE) = YEAR(GETDATE())
+            )
+        """)
+
+        inactive_contractors = cursor.fetchall()
+
+        # 4) Available machines at each yard last month
+        cursor.execute("""
+            SELECT 
+                YARD.LOCATION AS Yard_Name,
+                EQUIPMENT.MODEL,
+                EQUIPMENT.EQUIPMENT_ID
+            FROM EQUIPMENT
+            JOIN YARD
+                ON EQUIPMENT.YARD_ID = YARD.YARD_ID
+            WHERE EQUIPMENT.EQUIPMENT_ID NOT IN (
+                SELECT RENTAL_AGREEMENT.EQUIPMENT_ID
+                FROM RENTAL_AGREEMENT
+                WHERE
+                    (
+                        MONTH(RENTAL_AGREEMENT.START_DATE) =
+                        MONTH(DATEADD(MONTH, -1, GETDATE()))
+                        AND YEAR(RENTAL_AGREEMENT.START_DATE) =
+                        YEAR(DATEADD(MONTH, -1, GETDATE()))
+                    )
+                    OR
+                    (
+                        MONTH(RENTAL_AGREEMENT.END_DATE_) =
+                        MONTH(DATEADD(MONTH, -1, GETDATE()))
+                        AND YEAR(RENTAL_AGREEMENT.END_DATE_) =
+                        YEAR(DATEADD(MONTH, -1, GETDATE()))
+                    )
+            )
+        """)
+
+        available_machines = cursor.fetchall()
+
+        # 5) Contractor rental hours last month
+        cursor.execute("""
+            SELECT 
+                C.COMPANY,
+                SUM(DATEDIFF(HOUR, R.START_DATE, R.END_DATE_)) AS Total_Rental_Hours
+            FROM CONTRACTOR C
+            JOIN RENTAL_AGREEMENT R
+                ON C.CONTRACTOR_ID = R.CONTRACTOR_ID
+            WHERE 
+                R.START_DATE >= '2026-04-01'
+                AND R.START_DATE <= '2026-04-30'
+            GROUP BY C.COMPANY
+        """)
+
+        contractor_hours = cursor.fetchall()
+        # 5) Contractor rental hours last month
+        cursor.execute("""
+SELECT YARD_ID
+FROM YARD
+WHERE YARD_ID NOT IN (
+    SELECT E.YARD_ID
+    FROM EQUIPMENT E
+    JOIN RENTAL_AGREEMENT R
+        ON E.EQUIPMENT_ID = R.EQUIPMENT_ID
+    WHERE R.START_DATE >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) - 1, 0)
+      AND R.START_DATE < DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0)
+);
+        """)
+
+        yard_had_no_equipment= cursor.fetchall()
+
+    context = {
+        'most_rented': most_rented,
+        'technicians': technicians,
+        'inactive_contractors': inactive_contractors,
+        'available_machines': available_machines,
+        'contractor_hours': contractor_hours,
+        "yard_had_no_equipment":yard_had_no_equipment,
+    }
+
+    return render(request, 'rental_service/dashboard.html', context)

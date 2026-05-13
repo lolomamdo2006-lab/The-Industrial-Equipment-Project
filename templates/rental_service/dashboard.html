@@ -1,0 +1,53 @@
+<h1>Dashboard</h1>
+
+<h2>Most Rented Equipment</h2>
+
+{% if most_rented %}
+    <p>Model: {{ most_rented.0 }}</p>
+    <p>Rental Count: {{ most_rented.1 }}</p>
+{% endif %}
+
+<hr>
+
+<h2>Top Technicians Last Month</h2>
+
+{% for tech in technicians %}
+    <p>ID: {{ tech.0 }}</p>
+    <p>Name: {{ tech.1 }}</p>
+    <p>Inspection Count: {{ tech.2 }}</p>
+    <hr>
+{% endfor %}
+<hr>
+
+<h2>Inactive Contractors Last Month</h2>
+
+{% for contractor in inactive_contractors %}
+    <p>{{ contractor.0 }}</p>
+{% endfor %}
+
+<hr>
+
+<h2>Available Machines Last Month</h2>
+
+{% for machine in available_machines %}
+    <p>Yard: {{ machine.0 }}</p>
+    <p>Model: {{ machine.1 }}</p>
+    <p>Equipment ID: {{ machine.2 }}</p>
+    <hr>
+{% endfor %}
+
+<hr>
+
+<h2>Contractor Rental Hours Last Month</h2>
+
+{% for contractor in contractor_hours %}
+    <p>Company: {{ contractor.0 }}</p>
+    <p>Total Hours: {{ contractor.1 }}</p>
+    <hr>
+{% endfor %}
+<hr>
+<h2>Yard had no equipment rentals originating from it last month</h2>
+{% for y in yard_had_no_equipment %}
+    <p>Yard id is: {{ y.0 }}</p>
+    <hr>
+{% endfor %}
